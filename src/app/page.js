@@ -18,14 +18,10 @@ export default function Home() {
   const [foundResult, setFoundResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // useEffect(() => {
-  //   getDataDebounced();
-  //   return () => getDataDebounced.cancel();
-  // }, [router.asPath]);
-
   useEffect(() => {
-    getData();
-  },[]);
+    getDataDebounced();
+    return () => getDataDebounced.cancel();
+  }, [router.asPath]);
 
   useEffect(() => {
     if(inView) {
@@ -36,9 +32,9 @@ export default function Home() {
     }
   }, [inView]);
 
-  const getData = async () => {
+  const getData = async (page) => {
     try {
-      const response = await fetch(`https://api.jikan.moe/v4/anime?page=1`);
+      const response = await fetch(`https://api.jikan.moe/v4/anime?page=${page}`);
       const result = await response.json();
   
       const newData = result.data;
@@ -51,7 +47,7 @@ export default function Home() {
     }
   }
 
-  // const getDataDebounced = _debounce(() => getData(page), 300);
+  const getDataDebounced = _debounce(() => getData(page), 300);
 
   const handleSearch = async (param) => {
     if(param.length > 1) {
