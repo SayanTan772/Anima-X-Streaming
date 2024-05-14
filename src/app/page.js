@@ -11,6 +11,8 @@ import Link from "next/link";
 export default function Home() {
   const router = useRouter();
 
+  // Anime streaming website
+
   const [ref, inView] = useInView();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
